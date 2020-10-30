@@ -16,10 +16,10 @@ const ProfileInfo = (props) => {
             </div>
             <div className={s.descriptionBlock}>
                 <img className={s.profileImg} src={props.profile.photos.large != null ? props.profile.photos.large : userPhoto} />
-                ava + description
+                {props.profile.fullName }
             </div>
         </div>
     )
 }
-
+// != null ? props.profile.fullName:'There must be a name'
 export default ProfileInfo;
