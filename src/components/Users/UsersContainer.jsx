@@ -9,6 +9,8 @@ import {
 
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import { withAuthRedirect } from "../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -16,11 +18,11 @@ class UsersContainer extends React.Component {
   }
 
   onPageChanged = (pageNumber) => {
-    
     this.props.getUsers(pageNumber, this.props.pageSize);
   };
 
-  render() {debugger
+  render() {
+    debugger;
     return (
       <>
         {this.props.isFetching ? <Preloader /> : null}
@@ -32,7 +34,6 @@ class UsersContainer extends React.Component {
           users={this.props.users}
           follow={this.props.follow}
           unfollow={this.props.unfollow}
-          
           followingInProgress={this.props.followingInProgress}
         />
       </>
@@ -51,12 +52,15 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    follow,
-    unfollow,
-    toggleIsFollowingProgress,
-    getUsers,
-  }
+export default compose(
+  connect(
+    mapStateToProps,
+    {
+      follow,
+      unfollow,
+      toggleIsFollowingProgress,
+      getUsers,
+    }
+  ),
+  withAuthRedirect
 )(UsersContainer);
